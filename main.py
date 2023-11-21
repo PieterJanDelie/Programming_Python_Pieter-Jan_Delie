@@ -1,44 +1,81 @@
-from Persoon import Persoon;
-from databasecontroller import DatabaseController;
+from Databasecontroller import DatabaseController
+from Speler import Speler
+from MatchStats import MatchStats
 
-def startProgram():
-    db_controller.maak_tabel_indien_nodig()
-    choice = ""
-    while (choice != "e"):
-        choice = input("Wat wil je doen (v) verjaardagen bekijken, (i) ingeven van een verjaardag, (e) beïndig het programma: ")
-        match choice:
-            case "v":
-                bekijkverjaardagen()
-            case "i":
-                ingevenverjaardag()
-            case"e":
-                print("Bedankt om deze tool te gebruiken")
+def main():
+    db_controller = DatabaseController()
 
-def bekijkverjaardagen():
-	druk_alle_personen_af(db_controller.haal_personen_op())
+    while True:
+        print("\n1. Voeg speler toe")
+        print("2. Toon alle spelers")
+        print("3. Voeg matchstatistieken toe")
+        print("4. Bewerk speler")
+        print("5. Verwijder speler")
+        print("6. Toon matchstatistieken van speler")
+        print("7. Toon alle statistieken van match")
+        print("8. Sluit programma")
 
-def druk_alle_personen_af(personen):
-    for persoon in personen:
-        print(f"Voornaam: {persoon[1]}")
-        print(f"Achternaam: {persoon[2]}")
-        print(f"Geboortedatum: {persoon[3]}")
-        print("----------------------")
+        keuze = input("Voer het nummer van uw keuze in: ")
 
-def ingevenverjaardag():
-	db_controller.voeg_persoon_toe_aan_database(maak_persoon_aan())
+        if keuze == "1":
+            voornaam = input("Voornaam: ")
+            familienaam = input("Familienaam: ")
+            nummer = int(input("Nummer: "))
+            nieuwe_speler = Speler(voornaam, familienaam, nummer)
+            db_controller.insert_speler(nieuwe_speler)
+            print("Speler toegevoegd.")
 
-def maak_persoon_aan():
-    """voornaam = input("Voer de voornaam in: ")
-    achternaam = input("Voer de achternaam in: ")
-    geboortedatum = input("Voer de geboortedatum in: ")
-    aanspreking = input("Voer de aanspreking in: ")
+        elif keuze == "2":
+            spelers = db_controller.get_all_spelers()
+            print("\nAlle spelers:")
+            for speler in spelers:
+                print(speler)
 
-    persoon = Persoon(voornaam, achternaam, geboortedatum, aanspreking)"""
-    persoon = Persoon("Lars", "Buyck","07/11/2002", "Maatje")
-    return persoon
+        elif keuze == "3":
+            speler_id = int(input("Speler ID: "))
+            matchnummer = int(input("Matchnummer: "))
+            gespeelde_minuten = int(input("Aantal gespeelde minuten: "))
+            gescoorde_punten = int(input("Aantal gescoorde punten: "))
+            nieuwe_matchstats = MatchStats(speler_id, matchnummer, gespeelde_minuten, gescoorde_punten)
+            db_controller.insert_matchstats(nieuwe_matchstats)
+            print("Matchstatistieken toegevoegd.")
 
+        elif keuze == "4":
+            speler_id = int(input("Speler ID: "))
+            voornaam = input("Nieuwe voornaam: ")
+            familienaam = input("Nieuwe familienaam: ")
+            nummer = int(input("Nieuw nummer: "))
+            bewerkte_speler = Speler(voornaam, familienaam, nummer)
+            db_controller.update_speler(speler_id, bewerkte_speler)
+            print("Speler bewerkt.")
+
+        elif keuze == "5":
+            speler_id = int(input("Speler ID: "))
+            db_controller.delete_speler(speler_id)
+            print("Speler verwijderd.")
+
+        elif keuze == "6":
+            speler_id = int(input("Speler ID: "))
+            matchstatistieken = db_controller.get_matchstats_van_speler(speler_id)
+            print(f"\nMatchstatistieken van speler {speler_id}:")
+            for stat in matchstatistieken:
+                print(stat)
+
+        elif keuze == "7":
+            matchnummer = int(input("Matchnummer: "))
+            matchstatistieken = db_controller.get_matchstats_van_match(matchnummer)
+            print(f"\nAlle statistieken van match {matchnummer}:")
+            for stat in matchstatistieken:
+                print(stat)
+
+        elif keuze == "8":
+            print("Programma wordt afgesloten.")
+            break
+
+        else:
+            print("Ongeldige keuze. Probeer opnieuw.")
+
+    db_controller.close_connection()
 
 if __name__ == "__main__":
-    db_controller = DatabaseController()
-    startProgram()
-
+    main()
