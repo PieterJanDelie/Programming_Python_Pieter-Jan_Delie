@@ -27,7 +27,7 @@ class TestDatabaseController(unittest.TestCase):
         test_speler = Speler("John", "Doe", 1)
         self.db_controller.insert_speler(test_speler)
 
-        updated_speler = Speler("Jane", "Doe", 1)
+        updated_speler = Speler("Karel", "Doe", 1)
         self.db_controller.update_speler(1, updated_speler)
 
         result = self.db_controller.get_all_spelers()
@@ -52,6 +52,19 @@ class TestDatabaseController(unittest.TestCase):
 
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0][1:], test_matchstats.to_tuple())
+    
+    def test_get_all_matchstats(self):
+        test_matchstats1 = MatchStats(1, 1, 30, 15)
+        test_matchstats2 = MatchStats(2, 1, 25, 10)
+
+        self.db_controller.insert_matchstats(test_matchstats1)
+        self.db_controller.insert_matchstats(test_matchstats2)
+
+        result = self.db_controller.get_all_matchstats()
+
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0][1:], test_matchstats1.to_tuple())
+        self.assertEqual(result[1][1:], test_matchstats2.to_tuple())
 
 if __name__ == "__main__":
     unittest.main()

@@ -5,6 +5,12 @@ class MatchStats:
         self.gespeelde_minuten = gespeelde_minuten
         self.gescoorde_punten = gescoorde_punten
 
+    @classmethod
+    def from_tuple(cls, data_tuple):
+        _, speler_nummer, matchnummer, gespeelde_minuten, gescoorde_punten = data_tuple
+        return cls(speler_nummer, matchnummer, gespeelde_minuten, gescoorde_punten)
+
+
     def to_tuple(self):
         return (self.speler_nummer, self.matchnummer, self.gespeelde_minuten, self.gescoorde_punten)
 

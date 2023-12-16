@@ -44,6 +44,7 @@ class DatabaseController:
             INSERT INTO spelers (nummer, voornaam, familienaam)
             VALUES (?, ?, ?)
         ''', speler.to_tuple())
+        print("Speler toegevoegd")
         self.conn.commit()
 
     def update_speler(self, speler_id, speler):
@@ -106,6 +107,13 @@ class DatabaseController:
             SELECT * FROM matchstats
             WHERE matchnummer=?
         ''', (matchnummer,))
+        return cursor.fetchall()
+    
+    def get_all_matchstats(self):
+        cursor = self.conn.cursor()
+        cursor.execute('''
+            SELECT * FROM matchstats
+        ''')
         return cursor.fetchall()
 
     def close_connection(self):
