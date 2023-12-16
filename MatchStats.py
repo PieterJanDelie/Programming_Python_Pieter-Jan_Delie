@@ -5,6 +5,10 @@ class MatchStats:
         self.gespeelde_minuten = gespeelde_minuten
         self.gescoorde_punten = gescoorde_punten
 
+    def __init__(self, data_tuple):
+        _, self.speler_nummer, self.matchnummer, self.gespeelde_minuten, self.gescoorde_punten = data_tuple
+
+
     def to_tuple(self):
         return (self.speler_nummer, self.matchnummer, self.gespeelde_minuten, self.gescoorde_punten)
 

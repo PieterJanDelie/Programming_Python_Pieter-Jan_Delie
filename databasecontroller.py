@@ -44,6 +44,7 @@ class DatabaseController:
             INSERT INTO spelers (nummer, voornaam, familienaam)
             VALUES (?, ?, ?)
         ''', speler.to_tuple())
+        print("Speler toegevoegd")
         self.conn.commit()
 
     def update_speler(self, speler_id, speler):

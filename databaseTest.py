@@ -27,7 +27,7 @@ class TestDatabaseController(unittest.TestCase):
         test_speler = Speler("John", "Doe", 1)
         self.db_controller.insert_speler(test_speler)
 
-        updated_speler = Speler("Jane", "Doe", 1)
+        updated_speler = Speler("Karel", "Doe", 1)
         self.db_controller.update_speler(1, updated_speler)
 
         result = self.db_controller.get_all_spelers()
