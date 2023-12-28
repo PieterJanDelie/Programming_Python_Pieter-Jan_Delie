@@ -1,7 +1,7 @@
 import pandas as pd
-from Databasecontroller import DatabaseController
-from Speler import Speler
-from MatchStats import MatchStats
+from Controllers.Databasecontroller import DatabaseController
+from Models.Speler import Speler
+from Models.MatchStats import MatchStats
 
 def __vraag_speler_id__():
     return int(input("Spelers-nummer: "))

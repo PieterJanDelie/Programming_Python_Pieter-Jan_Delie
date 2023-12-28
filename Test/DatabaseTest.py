@@ -1,7 +1,7 @@
 import unittest
-from Databasecontroller import DatabaseController
-from Speler import Speler
-from MatchStats import MatchStats
+from Controllers.Databasecontroller import DatabaseController
+from Models.Speler import Speler
+from Models.MatchStats import MatchStats
 import os
 
 class TestDatabaseController(unittest.TestCase):

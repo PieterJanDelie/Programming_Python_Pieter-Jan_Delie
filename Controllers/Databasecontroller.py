@@ -1,10 +1,14 @@
+import os
 import sqlite3
-from Speler import Speler
-from MatchStats import MatchStats
+from Models.Speler import Speler
+from Models.MatchStats import MatchStats
 
 class DatabaseController:
     def __init__(self, database_name="spelers.db"):
-        self.conn = sqlite3.connect(database_name)
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+        database_path = os.path.join(current_directory, "..", "database", database_name)
+
+        self.conn = sqlite3.connect(database_path)
         self.create_tables()
 
     def create_tables(self):
